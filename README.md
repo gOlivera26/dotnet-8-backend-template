@@ -45,6 +45,14 @@ Este script renombrara:
 - Carpetas (BackendTemplate.API -> MiNuevoProyecto.API)
 - Archivos (.csproj, .sln, etc.)
 - Namespaces en todo el codigo
+- Al final pregunta si desea actualizar Docker y Observabilidad
+
+Tambien puedes ejecutar el script de Docker por separado:
+
+```powershell
+# Solo actualizar configuracion Docker/Observabilidad
+.\Update-DockerConfig.ps1 -NewName MiNuevoProyecto
+```
 
 ### 3. Ejecutar
 
