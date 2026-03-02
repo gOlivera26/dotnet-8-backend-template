@@ -90,3 +90,11 @@ Write-Host "Ahora puedes:" -ForegroundColor Yellow
 Write-Host "1. Abrir el archivo .sln" -ForegroundColor White
 Write-Host "2. Ejecutar 'dotnet build' para verificar" -ForegroundColor White
 Write-Host "3. Ejecutar 'dotnet run' para probar" -ForegroundColor White
+Write-Host ""
+
+# Preguntar si quiere actualizar Docker/Observabilidad
+$response = Read-Host "Desea actualizar la configuracion de Docker y Observabilidad? (S/N)"
+if ($response -eq 'S' -or $response -eq 's') {
+    Write-Host ""
+    & "$currentDir\Update-DockerConfig.ps1" -NewName $NewName -SkipConfirmation
+}
