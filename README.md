@@ -13,6 +13,8 @@ Template profesional para proyectos ASP.NET Core Web API con arquitectura limpia
 - **JWT Authentication** - Seguridad con JSON Web Tokens
 - **Swagger/OpenAPI** - Documentacion automatica
 - **Global Usings** - Codigo limpio sin repeticion de usings
+- **Docker & Docker Compose** - Despliegue containerizado
+- **Observabilidad** - OpenTelemetry con Grafana, Prometheus, Loki y Tempo
 
 ## Estructura del Proyecto
 
@@ -117,6 +119,74 @@ public class MiEntidad : IFullAuditableEntity
     public string MotivoBaja { get; set; }
 }
 ```
+
+## Docker
+
+### Build y Run con Docker Compose
+
+```bash
+docker-compose up --build
+```
+
+Esto iniciara todos los servicios:
+- **API**: http://localhost:8080
+- **Swagger**: http://localhost:8080/swagger
+- **Health Check**: http://localhost:8080/health
+- **PostgreSQL**: localhost:5432
+- **Prometheus**: http://localhost:9090
+- **Grafana**: http://localhost:3000 (admin/admin)
+- **Loki**: http://localhost:3100
+- **Tempo**: http://localhost:3200
+
+### Build Manual
+
+```bash
+# Build de la imagen
+docker build -t backendtemplate-api ./BackendTemplate.API
+
+# Run del contenedor
+docker run -p 8080:8080 backendtemplate-api
+```
+
+## Observabilidad
+
+El template incluye integracion completa con **OpenTelemetry** para metricas, trazas y logs.
+
+### Métricas (Prometheus)
+
+Las metricas estaran disponibles en `/metrics`:
+- metricas HTTP requests
+- metricas de runtime (.NET)
+- metricas personalizadas
+
+Acceso: `http://localhost:8080/metrics`
+
+### Trazas (Tempo)
+
+Las trazas se envian automaticamente a Tempo via OTLP (gRPC) en el puerto `4317`.
+
+### Logs (Loki)
+
+Los logs se configuran automaticamente via OTLP. Busca en Grafana con el datasource Loki.
+
+### Configuracion de OpenTelemetry
+
+Las variables de entorno configuradas en docker-compose:
+
+```yaml
+environment:
+  - OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:4317
+  - OTEL_EXPORTER_OTLP_LOGS_ENDPOINT=http://loki:3100/otlp/v1/logs
+  - OTEL_SERVICE_NAME=BackendTemplate-API
+```
+
+Para desarrollo local sin Docker, las metricas se mostraran en consola.
+
+### Dashboards Recomendados en Grafana
+
+1. **HTTP Metrics** - Requests, latencia, errores
+2. **Runtime Metrics** - GC, memoria, threads
+3. **Distributed Tracing** - Trazas de requests
 
 ## Licencia
 
