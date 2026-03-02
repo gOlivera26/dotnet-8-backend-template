@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="BackendTemplate.API/BackendTemplate.API.csproj" />
+  <Project Path="BackendTemplate.Application/BackendTemplate.Application.csproj" />
+  <Project Path="BackendTemplate.Domain/BackendTemplate.Domain.csproj" />
+</Solution>

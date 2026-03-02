@@ -1,0 +1,13 @@
+global using System;
+global using System.Collections.Generic;
+global using System.Collections.Concurrent;
+global using System.Linq;
+global using System.Text.Json;
+global using System.Threading.Tasks;
+global using AutoMapper;
+global using BackendTemplate.Application.ResponseDto.Common;
+global using BackendTemplate.Application.Utilities;
+global using BackendTemplate.Domain.Auditable;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Caching.Memory;

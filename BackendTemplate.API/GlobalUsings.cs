@@ -1,0 +1,20 @@
+// BackendTemplate.API Global Usings
+global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Reflection;
+global using System.Text;
+global using System.Text.Json;
+global using System.Threading.Tasks;
+global using BackendTemplate.API.Config;
+global using BackendTemplate.API.Controllers;
+global using BackendTemplate.API.Middlewares;
+global using BackendTemplate.Application.ResponseDto.Common;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.OpenApi.Models;
