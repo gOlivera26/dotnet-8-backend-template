@@ -15,6 +15,7 @@ Template profesional para proyectos ASP.NET Core Web API con arquitectura limpia
 - **Global Usings** - Codigo limpio sin repeticion de usings
 - **Docker & Docker Compose** - Despliegue containerizado
 - **Observabilidad** - OpenTelemetry con Grafana, Prometheus, Loki y Tempo
+- **Testing** - xUnit con ejemplos Unit e Integration Tests
 
 ## Estructura del Proyecto
 
@@ -128,7 +129,91 @@ public class MiEntidad : IFullAuditableEntity
 }
 ```
 
+## Testing
+
+El template incluye un proyecto de testing con **xUnit** listo para usar.
+
+### Estructura de Tests
+
+```
+tests/
+└── BackendTemplate.Tests/
+    ├── Unit/
+    │   └── Services/
+    │       └── OperationResponseTests.cs    # Ejemplo de tests unitarios
+    └── Integration/
+        └── Controllers/
+            └── IntegrationTestBase.cs      # Base para tests de integracion
+```
+
+### Paquetes Incluidos
+
+- **xUnit** - Framework de testing
+- **FluentAssertions** - Assertions mas legibles
+- **Moq** - Para mocking
+- **Microsoft.AspNetCore.Mvc.Testing** - Tests de integracion
+- **Microsoft.EntityFrameworkCore.InMemory** - Base de datos en memoria
+- **coverlet.collector** - Coverage de codigo
+
+### Ejecutar Tests
+
+```bash
+# Ejecutar todos los tests
+dotnet test
+
+# Ejecutar con coverage
+dotnet test --collect:"XPlat Code Coverage"
+
+# Ejecutar solo tests unitarios
+dotnet test --filter "Category=Unit"
+
+# Ejecutar solo tests de integracion
+dotnet test --filter "Category=Integration"
+```
+
+### Agregar un Test Unitario
+
+```csharp
+[Fact]
+public void MiMetodo_ConParametro_DeberiaRetornarResultado()
+{
+    // Arrange
+    var input = "test";
+    
+    // Act
+    var result = MiClase.MiMetodo(input);
+    
+    // Assert
+    result.Should().NotBeNull();
+    result.Should().Be("expected");
+}
+```
+
+### Agregar un Test de Integracion
+
+```csharp
+public class MiControllerTests : IntegrationTestBase
+{
+    private readonly HttpClient _client;
+    
+    public MiControllerTests()
+    {
+        _client = CreateClient();
+    }
+    
+    [Fact]
+    public async Task GetAll_DeberiaRetornar200()
+    {
+        var response = await _client.GetAsync("/api/mientidad");
+        
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+}
+```
+
 ## Docker
+
+### Build y Run con Docker Compose
 
 ### Build y Run con Docker Compose
 
